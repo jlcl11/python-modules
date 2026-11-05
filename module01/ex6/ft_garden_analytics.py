@@ -66,11 +66,11 @@ class Plant:
 
     def grow(self, amount: float = 0.8) -> None:
         self._stats.add_grow()
-        self._height += amount
+        self.set_height(self._height + amount)
 
     def age(self, days: int = 1) -> None:
         self._stats.add_age()
-        self._age += days
+        self.set_age(self._age + days)
 
 
 class Flower(Plant):
@@ -97,15 +97,10 @@ class Seed(Flower):
                  color: str, seed_count: int) -> None:
         super().__init__(name, height, age, color)
         self._seed_count = seed_count
-        self._seeds = 0
-
-    def bloom(self) -> None:
-        super().bloom()
-        self._seeds = self._seed_count
 
     def show(self) -> None:
         super().show()
-        print(f" Seeds: {self._seeds}")
+        print(f" Seeds: {self._seed_count if self._bloomed else 0}")
 
 
 class Tree(Plant):
@@ -121,15 +116,16 @@ class Tree(Plant):
             super().display()
             print(f" {self._shade_calls} shade")
 
+    _stats: _TreeStats
+
     def __init__(self, name: str, height: float, age: int,
                  trunk_diameter: float) -> None:
         super().__init__(name, height, age)
         self._trunk_diameter = trunk_diameter
-        self._tree_stats = Tree._TreeStats()
-        self._stats = self._tree_stats
+        self._stats = Tree._TreeStats()
 
     def produce_shade(self) -> None:
-        self._tree_stats.add_shade()
+        self._stats.add_shade()
         print(f"Tree {self._name} now produces a shade of "
               f"{self._height:.1f}cm long and "
               f"{self._trunk_diameter:.1f}cm wide.")
