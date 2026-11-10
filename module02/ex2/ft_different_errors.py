@@ -27,6 +27,11 @@ def test_error_types() -> None:
             print(f"Caught FileNotFoundError: {error}")
         except TypeError as error:
             print(f"Caught TypeError: {error}")
+    print("\nTesting multiple errors in one except...")
+    try:
+        garden_operations(0)
+    except (ValueError, TypeError) as error:
+        print(f"Caught one of several errors: {error}")
     print("\nAll error types tested successfully!")
 
 
