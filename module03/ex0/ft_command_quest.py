@@ -1,8 +1,8 @@
+#!/usr/bin/env python3
+
 import sys
 
-
 def main() -> None:
-    """Display the command-line parameters received by the script."""
     args: list[str] = sys.argv
     print("=== Command Quest ===")
     print(f"Program name: {args[0]}")
