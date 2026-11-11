@@ -2,7 +2,6 @@
 import math
 
 def get_player_pos() -> tuple[float, float, float]:
-    """Ask for coordinates 'x,y,z' until a valid set is entered."""
     while True:
         try:
             raw: str = input(
@@ -34,7 +33,6 @@ def distance(a: tuple[float, float, float],
 
 
 def main() -> None:
-    """Get two positions and compute distances between them."""
     print("=== Game Coordinate System ===")
     print()
     print("Get a first set of coordinates")
