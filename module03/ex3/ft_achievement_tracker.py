@@ -5,7 +5,8 @@ ACHIEVEMENTS: list[str] = [
     "Crafting Genius", "Strategist", "World Savior", "Speed Runner",
     "Survivor", "Master Explorer", "Treasure Hunter", "Unstoppable",
     "First Steps", "Collector Supreme", "Untouchable", "Sharp Mind",
-    "Boss Slayer", "Hidden Path Finder",
+    "Boss Slayer", "Hidden Path Finder"
+    
 ]
 
 
@@ -21,7 +22,7 @@ def main() -> None:
     for name in ["Alice", "Bob", "Charlie", "Dylan"]:
         players.append((name, gen_player_achievements()))
     for name, achievements in players:
-        print(f"Player {name}: {achievements}")
+        print(f"Player {name}: {achievements} \n")
     print()
 
     distinct: set[str] = set()
@@ -44,7 +45,7 @@ def main() -> None:
 
     for name, achievements in players:
         missing: set[str] = set(ACHIEVEMENTS).difference(achievements)
-        print(f"{name} is missing: {missing}")
+        print(f"{name} is missing: {missing}\n")
 
 
 if __name__ == "__main__":
