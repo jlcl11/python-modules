@@ -4,23 +4,13 @@ import sys
 import typing
 
 
-def print_error(message: str) -> None:
-    print(f"[STDERR] {message}", file=sys.stderr)
-
-
-def read_user_input(prompt: str) -> str:
-    sys.stdout.write(prompt)
-    sys.stdout.flush()
-    return sys.stdin.readline().strip()
-
-
 def recover_text(file_name: str) -> typing.Optional[str]:
     print("=== Cyber Archives Recovery & Preservation ===")
     print(f"Accessing file '{file_name}'")
     try:
         file: typing.IO[str] = open(file_name, "r")
     except OSError as error:
-        print_error(f"Error opening file '{file_name}': {error}")
+        print(f"Error opening file '{file_name}': {error}")
         return None
     content: typing.Optional[str] = None
     try:
@@ -29,11 +19,22 @@ def recover_text(file_name: str) -> typing.Optional[str]:
         print(content)
         print("---")
     except (OSError, UnicodeDecodeError) as error:
-        print_error(f"Error reading file '{file_name}': {error}")
+        print(f"Error reading file '{file_name}': {error}")
     finally:
         file.close()
     print(f"File '{file_name}' closed.")
     return content
+
+
+def transform_text(content: str) -> str:
+    result: str = ""
+    for char in content:
+        if char == "\n":
+            result += "#"
+        result += char
+    if len(content) > 0 and content[len(content) - 1] != "\n":
+        result += "#"
+    return result
 
 
 def save_text(file_name: str, content: str) -> None:
@@ -41,13 +42,13 @@ def save_text(file_name: str, content: str) -> None:
     try:
         file: typing.IO[str] = open(file_name, "w")
     except OSError as error:
-        print_error(f"Error opening file '{file_name}': {error}")
+        print(f"Error opening file '{file_name}': {error}")
         return
     try:
         file.write(content)
         print(f"Data saved in file '{file_name}'.")
     except OSError as error:
-        print_error(f"Error writing file '{file_name}': {error}")
+        print(f"Error writing file '{file_name}': {error}")
     finally:
         file.close()
 
@@ -59,11 +60,16 @@ def main() -> None:
     content: typing.Optional[str] = recover_text(sys.argv[1])
     if content is None:
         return
-    new_name: str = read_user_input("Enter new file name (or empty): ")
+    new_content: str = transform_text(content)
+    print("\nTransform data:")
+    print("---\n")
+    print(new_content)
+    print("---")
+    new_name: str = input("Enter new file name (or empty): ")
     if new_name == "":
         print("Not saving data.")
         return
-    save_text(new_name, content)
+    save_text(new_name, new_content)
 
 
 if __name__ == "__main__":
