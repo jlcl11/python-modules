@@ -11,7 +11,11 @@ def print_error(message: str) -> None:
 def read_user_input(prompt: str) -> str:
     sys.stdout.write(prompt)
     sys.stdout.flush()
-    return sys.stdin.readline().strip()
+    try:
+        return sys.stdin.readline().strip()
+    except (KeyboardInterrupt, UnicodeDecodeError):
+        print()
+        return ""
 
 
 def recover_text(file_name: str) -> str | None:
@@ -56,13 +60,14 @@ def save_text(file_name: str, content: str) -> bool:
         return False
     saved: bool = False
     try:
-        file.write(content)
+        try:
+            file.write(content)
+        finally:
+            file.close()
         print(f"Data saved in file '{file_name}'.")
         saved = True
     except OSError as error:
         print_error(f"Error writing file '{file_name}': {error}")
-    finally:
-        file.close()
     return saved
 
 

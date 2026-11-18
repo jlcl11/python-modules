@@ -45,12 +45,13 @@ def save_text(file_name: str, content: str) -> None:
         print(f"Error opening file '{file_name}': {error}")
         return
     try:
-        file.write(content)
+        try:
+            file.write(content)
+        finally:
+            file.close()
         print(f"Data saved in file '{file_name}'.")
     except OSError as error:
         print(f"Error writing file '{file_name}': {error}")
-    finally:
-        file.close()
 
 
 def main() -> None:
@@ -68,7 +69,7 @@ def main() -> None:
     new_name: str = ""
     try:
         new_name = input("Enter new file name (or empty): ")
-    except EOFError:
+    except (EOFError, KeyboardInterrupt, UnicodeDecodeError):
         print()
     if new_name == "":
         print("Not saving data.")
