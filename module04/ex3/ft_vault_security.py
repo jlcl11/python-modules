@@ -11,7 +11,7 @@ def secure_archive(file_name: str, action: str = "r",
                 return (True, file.read())
             file.write(content)
             return (True, "Content successfully written to file")
-    except (OSError, UnicodeDecodeError) as error:
+    except (OSError, ValueError) as error:
         return (False, str(error))
 
 
@@ -29,7 +29,10 @@ def main() -> None:
     print(result)
 
     print("\nUsing 'secure_archive' to write previous content to a new file:")
-    print(secure_archive("new_fragment.txt", "w", result[1]))
+    if result[0]:
+        print(secure_archive("new_fragment.txt", "w", result[1]))
+    else:
+        print("Nothing to write: the file could not be read")
 
 
 if __name__ == "__main__":
