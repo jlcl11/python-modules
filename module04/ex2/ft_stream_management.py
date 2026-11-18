@@ -14,7 +14,7 @@ def read_user_input(prompt: str) -> str:
     return sys.stdin.readline().strip()
 
 
-def recover_text(file_name: str) -> typing.Optional[str]:
+def recover_text(file_name: str) -> str | None:
     print("=== Cyber Archives Recovery & Preservation ===")
     print(f"Accessing file '{file_name}'")
     try:
@@ -22,7 +22,7 @@ def recover_text(file_name: str) -> typing.Optional[str]:
     except OSError as error:
         print_error(f"Error opening file '{file_name}': {error}")
         return None
-    content: typing.Optional[str] = None
+    content: str | None = None
     try:
         content = file.read()
         print("---\n")
@@ -51,7 +51,7 @@ def save_text(file_name: str, content: str) -> bool:
     print(f"Saving data to '{file_name}'")
     try:
         file: typing.IO[str] = open(file_name, "w")
-    except OSError as error:
+    except (OSError, ValueError) as error:
         print_error(f"Error opening file '{file_name}': {error}")
         return False
     saved: bool = False
@@ -70,7 +70,7 @@ def main() -> None:
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} <file>")
         return
-    content: typing.Optional[str] = recover_text(sys.argv[1])
+    content: str | None = recover_text(sys.argv[1])
     if content is None:
         return
     new_content: str = transform_text(content)
