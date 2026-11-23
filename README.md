@@ -1,6 +1,6 @@
 # Python Modules
 
-My solutions to Python Modules 00–03 of the 42 Málaga common core.
+My solutions to Python Modules 00–04 of the 42 Málaga common core.
 
 | Module | Topic |
 | --- | --- |
@@ -8,6 +8,7 @@ My solutions to Python Modules 00–03 of the 42 Málaga common core.
 | [module01](module01) | Object-oriented programming: classes, encapsulation with getters/setters, inheritance, static and class methods |
 | [module02](module02) | Exceptions: `try`/`except`, raising errors, handling different error types, custom exception classes and `finally` |
 | [module03](module03) | Collections: `sys.argv`, lists, tuples, sets, dictionaries, generators and comprehensions |
+| [module04](module04) | File handling: reading and writing files, `sys.stdin`/`sys.stdout`/`sys.stderr` streams, error handling and the `with` context manager |
 
 ## Running the exercises
 
